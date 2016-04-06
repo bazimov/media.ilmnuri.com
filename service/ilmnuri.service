@@ -1,0 +1,13 @@
+[Unit]
+Description=uWSGI instance to serve ilmnuri.com audio
+After=network.target
+
+[Service]
+User=nginx
+Group=nginx
+WorkingDirectory=/usr/share/nginx/html
+Environment="PATH=/bin"
+ExecStart=/bin/uwsgi --ini api.ini
+
+[Install]
+WantedBy=multi-user.target
