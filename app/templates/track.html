@@ -13,7 +13,7 @@
         <tbody>
          {% for i in new_list %}
           <tr>
-             <td><a href="http://ilmnuri.net/{{ teacher }}/{{ album }}/{{ i }}">{{ album.replace('_',' ') }}</a></td>
+             <td>{{ album.replace('_',' ') }}</td>
              <td><a href="http://ilmnuri.net/{{ teacher }}/{{ album }}/{{ i }}">{{ i.replace('_',' ').replace('.mp3', '') }}</a></td>
           </tr>
           {% endfor %}

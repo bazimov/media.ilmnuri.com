@@ -5,7 +5,6 @@ ilmnuri audio website
 from flask import Flask, render_template
 import logging
 from glob import glob
-import os
 
 app = Flask(__name__)
 
@@ -31,6 +30,8 @@ def first(teacher):
         s = item.split('/')
         new_list.append(s[1])
 
+    log.info('/dars/{0} page rendered'.format(teacher))
+
     return render_template('dars.html', new_list=new_list, teacher=teacher)     
 
 
@@ -43,11 +44,12 @@ def albums(teacher, album):
         s = item.split('/')
         new_list.append(s[2])
 
+    log.info('/dars/{0}/{1} page rendered'.format(teacher, album))
+
     return render_template('track.html',
                            new_list=new_list,
                            teacher=teacher,
                            album=album)
-
 
 if __name__ == '__main__':
     app.run(port=8080, host='0.0.0.0', debug=True)
