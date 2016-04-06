@@ -32,7 +32,7 @@ def first(teacher):
 
     log.info('/dars/{0} page rendered'.format(teacher))
 
-    return render_template('dars.html', new_list=new_list, teacher=teacher)     
+    return render_template('dars.html', new_list=sorted(new_list), teacher=teacher)     
 
 
 @app.route('/dars/<teacher>/<album>/')
@@ -47,7 +47,7 @@ def albums(teacher, album):
     log.info('/dars/{0}/{1} page rendered'.format(teacher, album))
 
     return render_template('track.html',
-                           new_list=new_list,
+                           new_list=sorted(new_list),
                            teacher=teacher,
                            album=album)
 
