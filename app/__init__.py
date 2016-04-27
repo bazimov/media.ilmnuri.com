@@ -8,7 +8,7 @@ from glob import glob
 
 app = Flask(__name__)
 
-logging.basicConfig(filename='/var/log/nginx/ilmnuri.log',
+logging.basicConfig(filename='/var/log/ilmnuri/ilmnuri.log',
                     format='%(asctime)s  %(funcName)s: %(message)s',
                     datefmt='%m/%d/%Y %I:%M:%S %p', level=logging.INFO)
 
