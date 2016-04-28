@@ -13,6 +13,8 @@ systemctl enable nginx && systemctl start nginx
 cp media.ilmnuri.com/NGINX/nginx.conf /etc/nginx/
 cp media.ilmnuri.com/service/ilmnuri.service /etc/systemd/system/
 cp -r media.ilmnuri.com/* /usr/share/nginx/html/
+mkdir -p /var/log/ilmnuri
+chmod 777 /var/log/ilmnuri
 systemctl enable ilmnuri && systemctl start ilmnuri
 
 chown nginx:nginx -R /usr/share/nginx/html
@@ -25,4 +27,4 @@ sudo firewall-cmd --permanent --zone=public --add-service=http
 sudo firewall-cmd --permanent --zone=public --add-service=https
 sudo firewall-cmd --permanent --zone=public --add-service=ssh
 sudo firewall-cmd --reload
-echo "now configure aws command line with aws config command then run the script /opt/awssync.sh
+echo "now configure aws command line with aws config command then run the script /opt/awssync.sh"
