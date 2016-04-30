@@ -7,6 +7,7 @@
 	  <tr>
               <th data-field="id">Darslik</th>
               <th data-field="name">Darslar</th>
+              <th data-field="name">Hajmi</th>
           </tr>
         </thead>
 
@@ -14,7 +15,8 @@
          {% for i in new_list %}
           <tr data-href="http://ilmnuri.net/{{ teacher }}/{{ album }}/{{ i }}" style="cursor:pointer;">
              <td><i class="material-icons">music_note</i> {{ album.replace('_',' ') }}</td>
-             <td>{{ i.replace('_',' ').replace('.mp3', '') }}</td>
+             <td>{{ i[0].replace('_',' ').replace('.mp3', '') }}</td>
+             <td>{{ i[1] }}</td>
              <td><i class="material-icons">play_circle_outline</i></td>
           </tr>
           {% endfor %}

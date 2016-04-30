@@ -5,6 +5,7 @@ ilmnuri audio website
 from flask import Flask, render_template
 import logging
 from glob import glob
+import os
 
 app = Flask(__name__)
 
@@ -41,8 +42,9 @@ def albums(teacher, album):
     list_items = glob('{0}/{1}/*'.format(teacher, album))
     new_list = []
     for item in list_items:
+        sz = '{0} MB'.format(os.path.getsize(item) / 1024000)
         s = item.split('/')
-        new_list.append(s[2])
+        new_list.append((s[2], sz))
 
     log.info('/dars/{0}/{1} page rendered'.format(teacher, album))
 
