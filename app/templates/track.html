@@ -13,7 +13,7 @@
 
         <tbody>
          {% for i in new_list %}
-          <tr data-href="http://ilmnuri.net/{{ teacher }}/{{ album }}/{{ i }}" style="cursor:pointer;">
+          <tr data-href="http://ilmnuri.net/{{ teacher }}/{{ album }}/{{ i[0] }}" style="cursor:pointer;">
              <td><i class="material-icons">music_note</i> {{ album.replace('_',' ') }}</td>
              <td>{{ i[0].replace('_',' ').replace('.mp3', '') }}</td>
              <td>{{ i[1] }}</td>
