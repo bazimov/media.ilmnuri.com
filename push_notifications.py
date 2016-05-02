@@ -1,0 +1,23 @@
+#!/usr/bin/python
+
+from gcm import *
+import sqlite3
+import sys
+
+database = '/usr/share/nginx/html/app/tokens.db'
+gcm = GCM("AIget_it_from_google_account")
+data = {'message': '{0}'.format(sys.argv[1])}
+
+conn = sqlite3.connect(database)
+c = conn.cursor()
+c.execute('select * from token_table')
+all_rows = c.fetchall()
+
+for tokens in all_rows:
+    reg_id = tokens[1]
+    try:
+        gcm.plaintext_request(registration_id=reg_id, data=data)
+    except Exception as e:
+        c.execute('DELETE FROM token_table WHERE data=?', (reg_id,))
+        conn.commit()
+        print e
