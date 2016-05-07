@@ -50,6 +50,11 @@ def first(teacher):
 @app.route('/dars/<teacher>/<album>/')
 def category(teacher, album):
 
+    mobile = None
+    user = request.headers.get('User-Agent')
+    if 'Mobile' in user:
+        mobile = 'mobile'
+
     list_items = glob('{0}/{1}/*'.format(teacher, album))
     new_list = []
     for item in list_items:
@@ -62,7 +67,8 @@ def category(teacher, album):
     return render_template('track.html',
                            new_list=sorted(new_list),
                            teacher=teacher,
-                           album=album)
+                           album=album,
+                           mobile=mobile)
 
 
 def insert_token(argument):
