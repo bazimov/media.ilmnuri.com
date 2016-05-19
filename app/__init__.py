@@ -8,6 +8,7 @@ import memcache
 import logging
 from glob import glob
 import os
+from random import randint
 import sqlite3
 
 app = Flask(__name__)
@@ -171,6 +172,32 @@ def token(uuid):
     token_id = request.json
     insert_token(token_id['data'])
     return jsonify({'uuid': uuid})
+
+
+@app.route('/api/v2.0/albums/', methods=['GET'])
+def api_ver2():
+
+    albums = []
+
+    if not client.get('album2'):
+        log.info('Dictionary empty, executing the script.')
+        os.system('/usr/share/nginx/html/get_full_list.py')
+        dictionary = client.get('album2')
+    else:
+        dictionary = client.get('album2')
+
+    for key, value in dictionary.items():
+        for k, v in value.items():
+            output = {
+                'category': key,
+                'album': k,
+                'items': sorted([{'song_atitle': x[0],
+                                  'song_id': randint(10000, 99999),
+                                  'song_size': x[1]} for x in v])
+            }
+            albums.append(output)
+    log.info('Rendering the main albums page.')
+    return jsonify({'albums': sorted(albums)})
 
 
 if __name__ == '__main__':
