@@ -204,13 +204,23 @@ def api_ver2():
 @app.route('/sanoq/')
 def sanoq():
     l = []
+    dt = []
+    tt = []
+    an = []
+    ap = []
     with open('/opt/count.log') as f:
         for i in f:
             s = i.split(',')
             s[-1] = s[-1].strip()
             l.append(s)
-    log.info(l)
-    return render_template('sanoq.html', all=l)
+            dt.append(s[0])
+            tt.append(int(s[1]))
+            an.append(int(s[2]))
+            ap.append(int(s[3]))
+
+    log.debug(l)
+
+    return render_template('sanoq.html', all=l, dt=dt, tt=tt, an=an, ap=ap)
 
 if __name__ == '__main__':
     app.run(port=8080, host='0.0.0.0', debug=True)
