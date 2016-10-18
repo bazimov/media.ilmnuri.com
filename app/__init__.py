@@ -10,6 +10,7 @@ from glob import glob
 import os
 from random import randint
 import sqlite3
+import datetime
 
 app = Flask(__name__)
 client = memcache.Client([('127.0.0.1', 11211)])
@@ -199,6 +200,17 @@ def api_ver2():
     log.info('Rendering the main albums page.')
     return jsonify({'albums': sorted(albums)})
 
+
+@app.route('/sanoq/')
+def sanoq():
+    l = []
+    with open('/opt/count.log') as f:
+        for i in f:
+            s = i.split(',')
+            s[-1] = s[-1].strip()
+            l.append(s)
+    log.info(l)
+    return render_template('sanoq.html', all=l)
 
 if __name__ == '__main__':
     app.run(port=8080, host='0.0.0.0', debug=True)
