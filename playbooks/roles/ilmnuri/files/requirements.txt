@@ -1,0 +1,7 @@
+awscli
+botocore
+Flask
+python-memcached
+requests
+uwsgi
+setuptools

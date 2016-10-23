@@ -1,0 +1,76 @@
+---
+- name: Ensure needed packages are installed
+  dnf:
+    name: "{{ item }}" 
+    state: latest
+  with_items:
+    - nginx
+    - supervisor
+    - memcached
+    - gcc
+    - git
+    - python-pip
+    - python-devel
+
+- name: Upgrade pip
+  shell: pip install --upgrade pip    
+
+- name: Copy requirements file
+  copy:
+    src: requirements.txt
+    dest: /tmp/requirements.txt
+    mode: 0744
+
+- name: Install all the python packages
+  shell: pip install -r /tmp/requirements.txt    
+
+- name: Nginx conf
+  copy:
+    src: ilmnuri.conf
+    dest: /etc/nginx/nginx.conf
+    mode: 0644
+  notify:
+  - restart nginx
+
+- name: Pull the app from git
+  git: 
+    repo: https://github.com/bazimov/webapp.git
+    dest: /usr/share/nginx/html/app
+
+- name: Copy setup file
+  copy:
+    src: "{{ item }}"
+    dest: /usr/share/nginx/html/{{ item }}
+    mode: 0755
+  with_items:
+    - setup.py
+    - ilmnuri.ini
+    - ilmnuri.py
+  notify:
+    - restart supervisor
+
+- name: Copy over supervisor conf
+  copy:
+    src: supervisord/ilmnuri.ini
+    dest: /etc/supervisord.d/ilmnuri.ini
+    mode: 0744
+  notify:
+  - restart supervisor
+
+- name: Make sure memcached started and enabled
+  service:
+    name: memcached
+    state: started
+    enabled: yes
+
+- name: Make sure supervisord started and enabled
+  service:
+    name: supervisord
+    state: started
+    enabled: yes
+
+- name: Make sure nginx started and enabled
+  service:
+    name: nginx
+    state: started
+    enabled: yes
