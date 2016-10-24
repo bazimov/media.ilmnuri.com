@@ -1,11 +1,7 @@
 # media.ilmnuri.com
 
-## this app has api and website of ilmnuri apps. 
+## ilmnuri.net webapp & android/iOS app backend server
 
-* in nginx conf do not forget to put
-```bash 
-     location / {
-              include uwsgi_params;
-              uwsgi_pass unix:/usr/share/nginx/html/app.sock;
-        }
-```
+## This app has api and website of ilmnuri apps. 
+
+### App has an ansible playbook, that automatically configures the vm.

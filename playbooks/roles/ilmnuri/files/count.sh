@@ -1,7 +1,7 @@
 #!/bin/bash
 
 
-f=/var/log/nginx/access.log-$(date +%Y%m%d).gz
+f=/var/log/nginx/ilmnuri.access.log-$(date +%Y%m%d).gz
 
 total=$(zless "$f" | grep ".mp3" | wc -l)
 android=$(zless "$f" | grep ".mp3" | grep -i "android" | wc -l)

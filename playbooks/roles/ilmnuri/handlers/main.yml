@@ -8,3 +8,6 @@
   service:
     name: supervisord
     state: restarted
+
+- name: reload firewalld
+  shell: firewall-cmd --reload
