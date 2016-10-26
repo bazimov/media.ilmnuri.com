@@ -3,10 +3,6 @@
 import memcache
 from glob import glob
 import os
-import gzip
-import operator
-from geoip import geolite2
-from datetime import datetime
 
 
 def main():
@@ -52,28 +48,6 @@ def new_api():
     client.set('album2', dictionary, time=43200)
 
 
-def flags():
-    client = memcache.Client([('127.0.0.1', 11211)])
-    dt = datetime.now().strftime('%Y%m%d')
-
-    d = {}
-    with gzip.open('/tmp/access.log-{0}.gz'.format(dt), 'r') as fin:
-        for line in fin:
-            ip = line.split('-')[0].rstrip()
-            match = geolite2.lookup(ip)
-            if match is not None:
-                c = match.country
-                if c in d:
-                    d[c] += 1
-                else:
-                    d[c] = 1
-
-    sorted_x = sorted(d.items(), key=operator.itemgetter(1))
-    sorted_x.reverse()
-
-    client.set('flags', sorted_x[:20], time=43200)
-
 if __name__ == '__main__':
     main()
     new_api()
-    flags()

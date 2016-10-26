@@ -55,6 +55,7 @@
     - ilmnuri.ini
     - ilmnuri.py
     - get_full_list.py
+    - get_flags.py
     - db_backup.sh
     - count.sh
     - awssync.sh
@@ -83,6 +84,14 @@
     minute: 0
     user: root
     job: /usr/share/nginx/html/count.sh
+
+- name: Setup cron for daily stats flag count
+  cron:
+    name: Daily flags counter
+    hour: 4
+    minute: 5
+    user: root
+    job: /usr/share/nginx/html/get_flags.py
 
 - name: Setup cron for weekly db backup
   cron:
