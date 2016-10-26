@@ -41,6 +41,9 @@
   git: 
     repo: "{{ webapp }}"
     dest: /usr/share/nginx/html/app
+    force: yes
+  notify:
+  - restart supervisor
 
 - name: Copy setup file
   copy:
