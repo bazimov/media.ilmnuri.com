@@ -26,7 +26,7 @@ def flags():
     sorted_x = sorted(d.items(), key=operator.itemgetter(1))
     sorted_x.reverse()
 
-    client.set('flags', sorted_x[:20], time=43200)
+    client.set('flags', sorted_x, time=43200)
 
 if __name__ == '__main__':
     flags()
