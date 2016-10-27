@@ -14,14 +14,15 @@ def flags():
     d = {}
     with gzip.open('/var/log/nginx/access.log-{0}.gz'.format(dt), 'r') as fin:
         for line in fin:
-            ip = line.split('-')[0].rstrip()
-            match = geolite2.lookup(ip)
-            if match is not None:
-                c = match.country
-                if c in d and c is not None:
-                    d[c] += 1
-                else:
-                    d[c] = 1
+            if "mp3" in line:
+                ip = line.split('-')[0].rstrip()
+                match = geolite2.lookup(ip)
+                if match is not None:
+                    c = match.country
+                    if c in d and c:
+                        d[c] += 1
+                    else:
+                        d[c] = 1
 
     sorted_x = sorted(d.items(), key=operator.itemgetter(1))
     sorted_x.reverse()
