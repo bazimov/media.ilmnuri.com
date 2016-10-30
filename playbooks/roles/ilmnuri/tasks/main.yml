@@ -71,11 +71,26 @@
     - backups
     - .aws
 
-- name: Copy aws config files
-  copy:
-    src: aws_config
-    dest: /root/.aws/config
-    mode: 0600
+#- name: Copy aws config files
+#  copy:
+#    src: "{{ item }}"
+#    dest: /root/.aws/{{ item }}
+#    mode: 0600
+#  with_items:
+#    - config
+#    - credentials
+
+#- name: Adding key id
+#  lineinfile: 
+#    dest: /root/.aws/credentials 
+#    regexp: ^aws_access_key_id
+#    line: aws_access_key_id = {{ aws_access_key_id }}
+
+#- name: Adding key
+#  lineinfile: 
+#    dest: /root/.aws/credentials 
+#    regexp: ^aws_secret_access_key
+#    line: aws_secret_access_key = {{ aws_access_key_id }}
 
 - name: Setup cron for weekly s3 sync
   cron:
