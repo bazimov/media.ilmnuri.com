@@ -52,12 +52,12 @@
     mode: 0755
   with_items:
     - setup.py
+    - stats.py
     - ilmnuri.ini
     - ilmnuri.py
     - get_full_list.py
     - get_flags.py
     - db_backup.sh
-    - count.sh
     - awssync.sh
   notify:
     - restart supervisor
@@ -83,7 +83,7 @@
     hour: 4
     minute: 0
     user: root
-    job: /usr/share/nginx/html/count.sh
+    job: /usr/share/nginx/html/stats.py
 
 - name: Setup cron for daily stats flag count
   cron:
