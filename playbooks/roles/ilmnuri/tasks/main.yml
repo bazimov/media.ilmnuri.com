@@ -64,9 +64,18 @@
 
 - name: Create backup directory
   file:
-    path: /root/backups
+    path: /root/{{ item }}
     mode: 0755
     state: directory
+  with_items:
+    - backups
+    - .aws
+
+- name: Copy aws config files
+  copy:
+    src: aws_config
+    dest: /root/.aws/config
+    mode: 0600
 
 - name: Setup cron for weekly s3 sync
   cron:
