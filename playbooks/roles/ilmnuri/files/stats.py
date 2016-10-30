@@ -22,4 +22,3 @@ if os.path.isfile(log_file):
         cur = con.cursor()
         if not cur.execute('select 1 from stats where Name = ?;', (dt_value,)):
             cur.execute("INSERT INTO stats VALUES(?,?);", (dt_value, count))
-
