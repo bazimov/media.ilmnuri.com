@@ -21,4 +21,3 @@ if os.path.isfile(log_file):
     with con:
         cur = con.cursor()
         cur.execute("INSERT INTO stats VALUES(?,?);", (dt_value, count))
-
