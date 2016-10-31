@@ -1,14 +1,16 @@
 #!/usr/bin/python
+# -*- coding: utf-8 -*-
 
+import os
 import gzip
-import operator
-import memcache
+import sqlite3 as lite
+from glob import glob
 from geoip import geolite2
 from datetime import datetime
 
 
 def flags():
-    client = memcache.Client([('127.0.0.1', 11211)])
+    con = lite.connect('/usr/share/nginx/html/flags.db')
     dt = datetime.now().strftime('%Y%m%d')
 
     d = {}
@@ -24,10 +26,17 @@ def flags():
                     else:
                         d[c] = 1
 
-    sorted_x = sorted(d.items(), key=operator.itemgetter(1))
-    sorted_x.reverse()
-
-    client.set('flags', sorted_x, time=43200)
+    with con:
+        cur = con.cursor()
+        os.chdir('/usr/share/nginx/html/app/static/flags/')
+        countries = sorted(glob('*'))
+        for k, v in d.items():
+            key = countries.index('{0}.png'.format(k)) + 1
+            cur.execute('select total from flags where id = {0};'.format(key))
+            t = cur.fetchone()
+            total = v + t[0]
+            cur.execute('update flags set today = {0},total = {1} '
+                        'where id = {2};'.format(v, total, key))
 
 if __name__ == '__main__':
     flags()
