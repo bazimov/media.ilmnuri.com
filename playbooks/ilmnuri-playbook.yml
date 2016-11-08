@@ -2,6 +2,5 @@
 - name: Configure ilmnuri.net VM
   hosts: all
   become: True
-  user: "root"
   roles:
     - ilmnuri

@@ -6,4 +6,4 @@ dt=$(date +"%m_%d_%Y")
 /usr/bin/sqlite3 /usr/share/nginx/html/flags.db .dump > /root/backups/flags_db_"$dt".bak
 
 cd /root/backups/
-/usr/bin/aws s3 sync . s3://dbbackup.ilmnuri.com/
+/usr/bin/aws s3 sync . s3://dbbackup.ilmnuri.com/ > /dev/null 2>&1
