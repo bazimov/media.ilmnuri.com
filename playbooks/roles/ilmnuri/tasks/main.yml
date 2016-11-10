@@ -92,7 +92,7 @@
 #    regexp: ^aws_secret_access_key
 #    line: aws_secret_access_key = {{ aws_access_key_id }}
 
-- name: Setup cron for weekly s3 sync
+- name: Setup cron for daily s3 sync
   cron:
     name: Sync new audio from S3 aws
     special_time: daily
