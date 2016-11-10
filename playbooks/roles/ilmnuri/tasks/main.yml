@@ -99,7 +99,7 @@
     hour: 0
     minute: 1
     user: root
-    job: /usr/share/nginx/html/awssync.sh
+    job: /usr/share/nginx/html/awssync.sh > /dev/null 2>&1
 
 - name: Setup cron for daily stats count
   cron:
@@ -122,7 +122,7 @@
     name: Database backup to s3
     special_time: weekly
     user: root
-    job: /usr/share/nginx/html/db_backup.sh
+    job: /usr/share/nginx/html/db_backup.sh > /dev/null 2>&1
   
 
 - name: Copy over supervisor conf
