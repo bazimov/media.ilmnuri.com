@@ -1,4 +1,5 @@
 from setuptools import find_packages, setup
+# -*- coding: utf-8 -*-
 
 with open('requirements.txt', 'rt') as requirements:
     requires = requirements.readlines()
