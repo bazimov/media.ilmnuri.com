@@ -45,22 +45,28 @@
   notify:
   - restart supervisor
 
-- name: Copy setup file
+- name: Copy setup files of uwsgi
   copy:
     src: "{{ item }}"
     dest: /usr/share/nginx/html/{{ item }}
     mode: 0755
   with_items:
-    - setup.py
-    - stats.py
     - ilmnuri.ini
     - ilmnuri.py
+  notify:
+    - restart supervisor
+
+- name: Copy scripts into root dir
+  copy:
+    src: "{{ item }}"
+    dest: /usr/share/nginx/html/{{ item }}
+    mode: 0755
+  with_items:
+    - stats.py
     - get_full_list.py
     - get_flags.py
     - db_backup.sh
     - awssync.sh
-  notify:
-    - restart supervisor
 
 - name: Create backup directory
   file:
@@ -95,7 +101,9 @@
 - name: Setup cron for daily s3 sync
   cron:
     name: Sync new audio from S3 aws
-    special_time: daily
+    hour: 1
+    minute: 0
+    weekday: 4,5
     user: root
     job: /usr/share/nginx/html/awssync.sh > /dev/null 2>&1
 
