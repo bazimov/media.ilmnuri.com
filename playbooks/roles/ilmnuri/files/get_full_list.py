@@ -23,7 +23,11 @@ def main():
         if s[1] in dictionary[s[0]].keys():
             if s[2]:
                 dictionary[s[0]][s[1]].append(s[2])
-
+    dictionary['Abdulloh']['0_Appni_yangilang_playmarketdan'] = [
+        'Bu appni versiyasi eski',
+        'iltimos, yangilab oling',
+        'Play marketda oxirgi 3.3 verisya bor',
+        'Yaqinda bu versiya ishlamay qolishi mumkin']
     client.set('album', dictionary, time=43200)
 
 
