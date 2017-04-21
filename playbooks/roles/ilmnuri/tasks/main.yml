@@ -100,12 +100,12 @@
 
 - name: Setup cron for daily s3 sync
   cron:
-    name: Sync new audio from S3 aws
+    name: "Sync new audio from S3 aws"
     hour: 1
     minute: 0
     weekday: 4,5
     user: root
-    job: /usr/share/nginx/html/awssync.sh > /dev/null 2>&1
+    job: '/usr/share/nginx/html/awssync.sh > /dev/null 2>&1'
 
 - name: Setup cron for daily stats count
   cron:

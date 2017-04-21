@@ -65,7 +65,7 @@ Vagrant.configure("2") do |config|
   # Puppet, Chef, Ansible, Salt, and Docker are also available. Please see the
   # documentation for more information about their specific syntax and use.
   config.vm.provision "shell", inline: <<-SHELL
-    sudo dnf install -y python-dnf unzip yum vim
+    sudo dnf install -y python-dnf unzip yum
   SHELL
 
   config.vm.provision "ansible_local" do |ansible|
