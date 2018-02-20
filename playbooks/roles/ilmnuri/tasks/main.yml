@@ -130,7 +130,14 @@
     user: root
     job: /usr/share/nginx/html/db_backup.sh > /dev/null 2>&1
   
-
+- name: setup certbot renewals
+  cron:
+    name: certbot letsencrypt renewals.
+    hour: 0
+    minute: 0
+    user: root
+    job: python -c 'import random; import time; time.sleep(random.random() * 3600)' && certbot renew
+  
 - name: Copy over supervisor conf
   copy:
     src: supervisord/ilmnuri.ini
