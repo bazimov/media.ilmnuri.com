@@ -1,16 +1,26 @@
 ---
+- name: upgrade all packages
+  yum:
+    name: '*'
+    state: latest
+
+- name: Install epel
+  yum:
+    name:
+      - epel-release
+    state: present
+
 - name: Ensure needed packages are installed
   yum:
-    name: "{{ item }}" 
+    name:
+      - nginx
+      - supervisor
+      - memcached
+      - gcc
+      - git
+      - python-pip
+      - python-devel
     state: latest
-  with_items:
-    - nginx
-    - supervisor
-    - memcached
-    - gcc
-    - git
-    - python-pip
-    - python-devel
 
 - name: Remove apache if exists
   yum:
@@ -129,7 +139,19 @@
     special_time: weekly
     user: root
     job: /usr/share/nginx/html/db_backup.sh > /dev/null 2>&1
-  
+
+- name: Creates an entry like "PATH=/..." on top of crontab
+  cron:
+    name: PATH
+    env: yes
+    job: /usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/root/bin
+
+- name: Creates an entry like "SHELL=/bin/bash" on top of crontab
+  cron:
+    name: SHELL
+    env: yes
+    job: /bin/bash  
+
 - name: setup certbot renewals
   cron:
     name: certbot letsencrypt renewals.
@@ -152,16 +174,15 @@
     state: started
     enabled: yes
   with_items:
-    - firewalld
     - memcached
     - supervisord
     - nginx 
 
-- name: Enabled http/ssh port 
-  shell: firewall-cmd --permanent --zone=public --add-service={{ item }}
-  with_items:
-    - http
-    - https
-    - ssh 
-  notify:
-    - reload firewalld
+#- name: Enabled http/ssh port 
+#  shell: firewall-cmd --permanent --zone=public --add-service={{ item }}
+#  with_items:
+#    - http
+#    - https
+#    - ssh 
+#  notify:
+#    - reload firewalld
