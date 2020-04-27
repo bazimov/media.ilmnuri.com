@@ -18,3 +18,10 @@ Run teh playbook from remote machine.
  1. First have inventory called ilmnuri in your /etc/ansible/hosts file
 
 ```ansible-playbook playbooks/ilmnuri-playbook.yml```
+
+
+### SSL
+Run certbot command to get letsencrypt certs.
+```
+certbot --nginx
+```

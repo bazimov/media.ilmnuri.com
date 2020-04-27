@@ -20,6 +20,8 @@
       - git
       - python-pip
       - python-devel
+      - certbot
+      - python2-certbot-nginx
     state: latest
 
 - name: Remove apache if exists
